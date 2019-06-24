@@ -1,7 +1,7 @@
 package naught.local.empconvo.models;
 
 
-import com.lambdaschool.starthere.exceptions.ValidationError;
+import naught.local.empconvo.exception.ValidationError;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
