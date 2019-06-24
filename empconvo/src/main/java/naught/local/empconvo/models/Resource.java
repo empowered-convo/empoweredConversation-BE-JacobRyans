@@ -1,15 +1,21 @@
 package naught.local.empconvo.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "resource")
 public class Resource {
 
-    @Column(nullable = false)
-    private long categoryid;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long resourceid;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryid")
+    @JsonIgnoreProperties("resources")
+    private Category category;
 
     private String textbody;
     private String author;
@@ -17,14 +23,15 @@ public class Resource {
     public Resource() {
     }
 
-    public Resource(long categoryid, String textbody, String author) {
-        this.categoryid = categoryid;
+    public Resource(String textbody, String author) {
         this.textbody = textbody;
         this.author = author;
     }
 
-    public long getCategoryid() {
-        return categoryid;
+    public Resource(Category category, String textbody, String author) {
+        this.category = category;
+        this.textbody = textbody;
+        this.author = author;
     }
 
     public String getTextbody() {
@@ -41,5 +48,17 @@ public class Resource {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public long getResourceid() {
+        return resourceid;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

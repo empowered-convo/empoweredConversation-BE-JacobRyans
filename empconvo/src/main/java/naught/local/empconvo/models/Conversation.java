@@ -1,27 +1,46 @@
 package naught.local.empconvo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "conversation")
 public class Conversation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long conversationid;
+
     private String survivorname;
     private String survivornumber;
     private String ffname;
     private String ffnumber;
 
-    @Column(nullable = false)
-    private long categoryid;
+    @ManyToOne
+    @JoinColumn(name = "categoryid")
+    @JsonIgnoreProperties("conversations")
+    private Category category;
 
     public Conversation() {
     }
 
-    public Conversation(String survivorname, String survivornumber, String ffname, String ffnumber, long categoryid) {
+    public Conversation(String survivorname, String survivornumber, String ffname, String ffnumber) {
         this.survivorname = survivorname;
         this.survivornumber = survivornumber;
         this.ffname = ffname;
         this.ffnumber = ffnumber;
-        this.categoryid = categoryid;
+    }
+
+    public Conversation(String survivorname, String survivornumber, String ffname, String ffnumber, Category category) {
+        this.survivorname = survivorname;
+        this.survivornumber = survivornumber;
+        this.ffname = ffname;
+        this.ffnumber = ffnumber;
+        this.category = category;
+    }
+
+    public long getConversationid() {
+        return conversationid;
     }
 
     public String getSurvivorname() {
@@ -56,8 +75,7 @@ public class Conversation {
         this.ffnumber = ffnumber;
     }
 
-    public long getCategoryid() {
-        return categoryid;
+    public Category getCategory() {
+        return category;
     }
-
 }

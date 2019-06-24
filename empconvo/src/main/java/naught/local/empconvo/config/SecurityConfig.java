@@ -16,9 +16,9 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 import javax.annotation.Resource;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@Configuration
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
 
