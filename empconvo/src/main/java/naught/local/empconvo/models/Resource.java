@@ -17,7 +17,9 @@ public class Resource {
     @JsonIgnoreProperties("resources")
     private Category category;
 
+    @Column(columnDefinition = "TEXT")
     private String textbody;
+
     private String author;
     private String title;
 
