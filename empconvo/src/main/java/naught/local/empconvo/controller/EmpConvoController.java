@@ -46,6 +46,11 @@ public class EmpConvoController {
         }
     }
 
+    @GetMapping(value="/conversations")
+    public ResponseEntity<?> findAllConvos() {
+        return new ResponseEntity<>(convoService.findAll(), HttpStatus.OK);
+    }
+
     @PostMapping(value="/conversations")
     public ResponseEntity<?> createNewConversation(@Valid @RequestBody Conversation newConvo) {
         Conversation createdConvo = convoService.save(newConvo);
@@ -59,6 +64,21 @@ public class EmpConvoController {
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
         try { messageFactory.create(params); } catch(Exception exc) { System.out.println(exc); };
         return new ResponseEntity<>(createdConvo, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value="/conversations/finished/{conversationid}")
+    public ResponseEntity<?> finishConversation(@PathVariable long conversationid) {
+        Conversation createdConvo = convoService.findById(conversationid);
+        String ACCOUNT_SID = "AC3004f5000c8be4bc0f62a04d63d5b6d0";
+        String AUTH_TOKEN = "763bfc43915422c9baf19f2e36e2fd9f";
+        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("To", "+13375524505"));
+        params.add(new BasicNameValuePair("From", "+19179206969"));
+        params.add(new BasicNameValuePair("Body", createdConvo.getFfname() + " is ready to speak with you and has read resources to prepare themselves, thank you for trusting in us."));
+        MessageFactory messageFactory = client.getAccount().getMessageFactory();
+        try { messageFactory.create(params); convoService.delete(conversationid); } catch(Exception exc) { System.out.println(exc); };
+        return new ResponseEntity<>("Conversation " + conversationid + " has been closed.", HttpStatus.OK);
     }
 
     @GetMapping(value="/categories")

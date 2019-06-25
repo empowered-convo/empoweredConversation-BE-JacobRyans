@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service(value = "convoService")
 public class ConversationServiceImpl implements ConversationService {
@@ -48,5 +50,12 @@ public class ConversationServiceImpl implements ConversationService {
     @Override
     public void delete(long id) {
         restrepos.deleteById(id);
+    }
+
+    @Override
+    public List<Conversation> findAll() {
+        ArrayList<Conversation> list = new ArrayList<>();
+        restrepos.findAll().iterator().forEachRemaining(list::add);
+        return list;
     }
 }
