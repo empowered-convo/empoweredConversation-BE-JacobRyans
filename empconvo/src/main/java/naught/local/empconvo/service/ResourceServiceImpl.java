@@ -3,6 +3,7 @@ package naught.local.empconvo.service;
 import naught.local.empconvo.exception.ResourceNotFoundException;
 import naught.local.empconvo.models.Conversation;
 import naught.local.empconvo.models.Resource;
+import naught.local.empconvo.repos.ConversationRepository;
 import naught.local.empconvo.repos.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,6 @@ import java.util.List;
 public class ResourceServiceImpl implements ResourceService {
     @Autowired
     private ResourceRepository restrepos;
-
-    @Autowired
 
     @Override
     public List<Resource> findAllResourcesByCatId(long id) {
@@ -30,7 +29,4 @@ public class ResourceServiceImpl implements ResourceService {
         }
         return resources;
     }
-
-    @Override
-    public Conversation
 }
