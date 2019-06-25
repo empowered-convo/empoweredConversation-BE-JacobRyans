@@ -19,6 +19,7 @@ public class Resource {
 
     private String textbody;
     private String author;
+    private String title;
 
     public Resource() {
     }
@@ -32,6 +33,13 @@ public class Resource {
         this.category = category;
         this.textbody = textbody;
         this.author = author;
+    }
+
+    public Resource(Category category, String textbody, String author, String title) {
+        this.category = category;
+        this.textbody = textbody;
+        this.author = author;
+        this.title = title;
     }
 
     public String getTextbody() {
@@ -52,6 +60,14 @@ public class Resource {
 
     public long getResourceid() {
         return resourceid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Category getCategory() {
