@@ -30,9 +30,9 @@ public class Swagger2Config
 
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("Java String Back End Starting Project")
-                .description("A starting application for developing Java Spring Back End Projects")
-                .contact(new Contact("John Mitchell", "http://www.lambdaschool.com", "john@lambdaschool.com"))
+        return new ApiInfoBuilder().title("Empowered Conversation Java Spring Application")
+                .description("Java Spring server for working with Empowered Conversations front-end.")
+                .contact(new Contact("Jacob Ryans", "idevelop.tech", "aemidzero@gmail.com"))
                 .license("MIT").licenseUrl("https://github.com/LambdaSchool/java-starthere/blob/master/LICENSE")
                 .version("1.0.0").build();
     }
