@@ -3,6 +3,7 @@ package naught.local.empconvo.controller;
 import naught.local.empconvo.exception.ResourceNotFoundException;
 import naught.local.empconvo.models.Conversation;
 import naught.local.empconvo.models.Resource;
+import naught.local.empconvo.service.CategoryService;
 import naught.local.empconvo.service.ConversationService;
 import naught.local.empconvo.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class EmpConvoController {
     @Autowired
     private ConversationService convoService;
 
+    @Autowired
+    private CategoryService catService;
+
     @GetMapping(value="/categories/{categoryid}/resources")
     public ResponseEntity<?> getAllResourcesByCategoryId(@PathVariable long categoryid) {
         List<Resource> response = resourceService.findAllResourcesByCatId(categoryid);
@@ -55,5 +59,10 @@ public class EmpConvoController {
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
         try { messageFactory.create(params); } catch(Exception exc) { System.out.println(exc); };
         return new ResponseEntity<>(createdConvo, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value="/categories")
+    public ResponseEntity<?> findAllCategories() {
+        return new ResponseEntity<>(catService.findAll(), HttpStatus.OK);
     }
 }
