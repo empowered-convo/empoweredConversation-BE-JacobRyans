@@ -9,7 +9,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class EmpconvoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EmpconvoApplication.class, args);
+        SpringApplication.run(EmpconvoApplication.class, args
+        );
     }
 
 }

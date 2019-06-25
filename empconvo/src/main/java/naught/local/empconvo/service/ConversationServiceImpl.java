@@ -2,9 +2,12 @@ package naught.local.empconvo.service;
 
 import naught.local.empconvo.models.Category;
 import naught.local.empconvo.models.Conversation;
+import naught.local.empconvo.repos.CategoryRepository;
 import naught.local.empconvo.repos.ConversationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service(value = "convoService")
 public class ConversationServiceImpl implements ConversationService {
@@ -18,7 +21,7 @@ public class ConversationServiceImpl implements ConversationService {
     public Conversation save(Conversation conversation) {
         Conversation newConvo = new Conversation();
         if(conversation.getCategory() != null) {
-            newConvo.setCategory(conversation.getCategory());
+            newConvo.setCategory(catrepos.findById(conversation.getCategory().getCategoryid()).orElseThrow(() -> new EntityNotFoundException("No category found with that id.")));
         } else {
             newConvo.setCategory(new Category("None Provided"));
         }
@@ -35,5 +38,15 @@ public class ConversationServiceImpl implements ConversationService {
             newConvo.setSurvivornumber(conversation.getSurvivornumber());
         }
         return restrepos.save(newConvo);
+    }
+
+    @Override
+    public Conversation findById(long id) {
+        return restrepos.findById(id).orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+    }
+
+    @Override
+    public void delete(long id) {
+        restrepos.deleteById(id);
     }
 }
