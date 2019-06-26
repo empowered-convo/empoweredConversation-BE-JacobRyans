@@ -118,7 +118,7 @@ public class EmpConvoController {
         String AUTH_TOKEN = "763bfc43915422c9baf19f2e36e2fd9f";
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("To", "+13375524505"));
+        params.add(new BasicNameValuePair("To", createdConvo.getSurvivornumber()));
         params.add(new BasicNameValuePair("From", "+19179206969"));
         params.add(new BasicNameValuePair("Body", createdConvo.getFfname() + " is ready to speak with you and has read resources to prepare themselves, thank you for trusting in us."));
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
