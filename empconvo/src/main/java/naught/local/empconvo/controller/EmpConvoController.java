@@ -87,7 +87,7 @@ public class EmpConvoController {
         String AUTH_TOKEN = "763bfc43915422c9baf19f2e36e2fd9f";
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("To", createdConvo.getFfnumber()));
+        params.add(new BasicNameValuePair("To", newConvo.getFfnumber()));
         params.add(new BasicNameValuePair("From", "+19179206969"));
         params.add(new BasicNameValuePair("Body", createdConvo.getSurvivorname() + " would like to speak with you about a sensitive matter. " + "https://empowered-conversation.netlify.com/conversation/resources/" + "?cid=" + createdConvo.getConversationid() + "&caid=" + createdConvo.getCategory().getCategoryid() ));
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
@@ -109,6 +109,8 @@ public class EmpConvoController {
                 break;
             } else if(c.getConversationid() >= conversationid) {
                 return new ResponseEntity<>("Conversation already deleted", HttpStatus.OK);
+            } else if(list.get(list.size()-1).getConversationid() < conversationid) {
+                return new ResponseEntity<>("Conversation already deleted or doesn't exist", HttpStatus.OK);
             }
         }
         Conversation createdConvo = convoService.findById(conversationid);
@@ -116,7 +118,7 @@ public class EmpConvoController {
         String AUTH_TOKEN = "763bfc43915422c9baf19f2e36e2fd9f";
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("To", "+13375524505"));
+        params.add(new BasicNameValuePair("To", createdConvo.getSurvivornumber()));
         params.add(new BasicNameValuePair("From", "+19179206969"));
         params.add(new BasicNameValuePair("Body", createdConvo.getFfname() + " is ready to speak with you and has read resources to prepare themselves, thank you for trusting in us."));
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
