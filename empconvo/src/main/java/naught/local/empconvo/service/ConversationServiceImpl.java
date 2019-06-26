@@ -1,5 +1,6 @@
 package naught.local.empconvo.service;
 
+import naught.local.empconvo.exception.ResourceNotFoundException;
 import naught.local.empconvo.models.Category;
 import naught.local.empconvo.models.Conversation;
 import naught.local.empconvo.repos.CategoryRepository;
@@ -44,7 +45,7 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Override
     public Conversation findById(long id) {
-        return restrepos.findById(id).orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+        return restrepos.findById(id).orElseThrow(() -> new ResourceNotFoundException("Conversation with that ID not found"));
     }
 
     @Override

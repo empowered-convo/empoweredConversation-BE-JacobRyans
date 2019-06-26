@@ -87,9 +87,9 @@ public class EmpConvoController {
         String AUTH_TOKEN = "763bfc43915422c9baf19f2e36e2fd9f";
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("To", "+13375524505"));
+        params.add(new BasicNameValuePair("To", createdConvo.getFfnumber()));
         params.add(new BasicNameValuePair("From", "+19179206969"));
-        params.add(new BasicNameValuePair("Body", createdConvo.getSurvivorname() + " would like to speak with you about a sensitive matter. " + "https://empconvo.com/conversation/" + "?cid=" + createdConvo.getConversationid() + "&caid=" + createdConvo.getCategory().getCategoryid() ));
+        params.add(new BasicNameValuePair("Body", createdConvo.getSurvivorname() + " would like to speak with you about a sensitive matter. " + "https://empowered-conversation.netlify.com/conversation/resources/" + "?cid=" + createdConvo.getConversationid() + "&caid=" + createdConvo.getCategory().getCategoryid() ));
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
         try { messageFactory.create(params); } catch(Exception exc) { System.out.println(exc); };
         return new ResponseEntity<>(createdConvo, HttpStatus.CREATED);
@@ -102,6 +102,15 @@ public class EmpConvoController {
     })
     @DeleteMapping(value="/conversations/finished/{conversationid}")
     public ResponseEntity<?> finishConversation(@PathVariable long conversationid) {
+        ArrayList<Conversation> list = new ArrayList<>();
+        convoService.findAll().iterator().forEachRemaining(list::add);
+        for(Conversation c : list) {
+            if(c.getConversationid() == conversationid) {
+                break;
+            } else if(c.getConversationid() >= conversationid) {
+                return new ResponseEntity<>("Conversation already deleted", HttpStatus.OK);
+            }
+        }
         Conversation createdConvo = convoService.findById(conversationid);
         String ACCOUNT_SID = "AC3004f5000c8be4bc0f62a04d63d5b6d0";
         String AUTH_TOKEN = "763bfc43915422c9baf19f2e36e2fd9f";
